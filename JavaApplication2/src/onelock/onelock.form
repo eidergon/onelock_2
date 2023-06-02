@@ -113,37 +113,37 @@
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="poliedro_r4" pref="33" max="32767" attributes="0"/>
+                      <Component id="poliedro_r4" max="32767" attributes="0"/>
                       <Component id="id_vision" max="32767" attributes="0"/>
                       <Component id="tienda_claro" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="extencion" pref="33" max="32767" attributes="0"/>
+                      <Component id="extencion" max="32767" attributes="0"/>
                       <Component id="aplicativo" max="32767" attributes="0"/>
                       <Component id="biometrica" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="claro_url" max="32767" attributes="0"/>
-                      <Component id="versus" pref="33" max="32767" attributes="0"/>
+                      <Component id="versus" max="32767" attributes="0"/>
                       <Component id="gsmarena" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="desactivado" max="32767" attributes="0"/>
-                      <Component id="notus" pref="33" max="32767" attributes="0"/>
+                      <Component id="notus" max="32767" attributes="0"/>
                       <Component id="agendamiento" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="crm" pref="33" max="32767" attributes="0"/>
+                      <Component id="crm" max="32767" attributes="0"/>
                       <Component id="google_maps" alignment="0" max="32767" attributes="0"/>
                       <Component id="nueva_extension" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace pref="28" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="claro_web" pref="33" max="32767" attributes="0"/>
+                      <Component id="claro_web" max="32767" attributes="0"/>
                       <Component id="claro_home" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>

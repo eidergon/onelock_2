@@ -1,18 +1,26 @@
 package onelock;
+
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
 
 public class login extends javax.swing.JFrame {
+
+    public static String[][] listaUsuarios; // Variable estática para almacenar la lista de usuarios
     String url = "https://poliedro.comcel.com.co/LoginPoliedro/Login.aspx"; //Asignamos la direccion del poliedro en la variable url 
-    
+
     public login() {
         initComponents();
         this.setLocationRelativeTo(null); //Coloca el jframe login en una ubicacion centrada 
-        //hfdhfd
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -78,6 +86,11 @@ public class login extends javax.swing.JFrame {
         pass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 passMousePressed(evt);
+            }
+        });
+        pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passKeyPressed(evt);
             }
         });
 
@@ -196,35 +209,50 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        String[] Usuarios={"lis","andres","jhon"}; //La variable Usuarios guarda en una lista los usuarios 
-        String[] Claves= new String[3]; //La variable Claves guarda las claves para cada usuario, poner la cantidad de usurios 
-        Claves[0]="12345"; //Se le asigna la clave al primer usurio 
-        Claves[1]="67890"; //Se le asigna la clave al segundo usuario
-        Claves[2]="13579"; //Se le asigna la clave al tercer usuario
-        String Usuario = use.getText(); //Esta variable guarda el texto que este en el campo de texto usuario del jframe
-        String password = pass.getText(); //Esta variable guarda el texto que este en el campo de texto contraseña del jframe
-        boolean mensaje = false; //Asigno la variable mensaje como falso 
-        for(int i=0; i<Usuarios.length;i++){ //Con esta funcion estamos recorriendo la lista de Usuarios  
-            if(Usuarios[i].equals(Usuario) && Claves[i].equals(password)){ //Verifica si el usuario y contraseña ingresadas sean las correctas 
-                mensaje= true; //Si el usuario y la contraseña son correctas la variable mensaje se vuleve verdadera   
+        //evento boton login
+        boolean mensajeExito = false;
+        listaUsuarios = conexion.getListaUsuarios();
+        String usuarioFormulario = use.getText(); //Esta variable guarda el texto que este en el campo de texto usuario del jframe
+        String contraseniaFormulario = pass.getText(); //Esta variable guarda el texto que este en el campo de texto contraseña del jframe
+
+        for (int i = 0; i < listaUsuarios.length; i++) {
+            if (usuarioFormulario.equals(listaUsuarios[i][0]) && contraseniaFormulario.equals(listaUsuarios[i][1])) {
+                mensajeExito = true; //Si el usuario y la contraseña son correctas la variable mensaje se vuleve verdadera   
             }
         }
-        if(mensaje){ //Si la variable mensaje es verdadera se empiaza a ejecuar la funcion para ingresar al poliedro
-            if(java.awt.Desktop.isDesktopSupported()){
+        /*
+          try {
+            while (listaUsuarios.next()) {
+                String usuarioActual = listaUsuarios.getString("usuario");
+                String contraseniaActual = listaUsuarios.getString("contrasena");
+                if (usuarioFormulario.equals(usuarioActual) && contraseniaFormulario.equals(contraseniaActual)) {
+                    mensajeExito = true; //Si el usuario y la contraseña son correctas la variable mensaje se vuleve verdadera   
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "No se encontraron usuarios en la base de datos"); //Avisa que se esta ingresando al poliedro 
+        }
+        
+        
+         */
+
+        if (mensajeExito) { //Si la variable mensaje es verdadera se empiaza a ejecuar la funcion para ingresar al poliedro
+            if (java.awt.Desktop.isDesktopSupported()) {
                 java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-                if(desktop.isSupported(java.awt.Desktop.Action.BROWSE)){
-                    try{
+                if (desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+                    try {
                         JOptionPane.showMessageDialog(null, "Ingresando al poliedro"); //Avisa que se esta ingresando al poliedro 
-                        java.net.URI uri= new java.net.URI(url); //Llamamos la variable url que contiene la uicacion del poliedro
+                        java.net.URI uri = new java.net.URI(url); //Llamamos la variable url que contiene la uicacion del poliedro
                         desktop.browse(uri); //Abrira una ventana en el navegador con la direccion del poliedro
-                    }catch(IOException | URISyntaxException e){
+                    } catch (IOException | URISyntaxException e) {
                         JOptionPane.showMessageDialog(null, e); //Si ocurre un error lo muestra 
                     }
                 }
             }
             this.dispose(); //Cierra el jframe login
-        }else{ //Si la variable mensaje sigue siendo falsa se mandarra el siguiente mensaje  
-            JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecto"); //Mestra el mensaje 
+        } else { //Si la variable mensaje sigue siendo falsa se mandarra el siguiente mensaje  
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto"); //Mestra el mensaje 
             use.setText(""); //El campo de texto usuario se limpia 
             pass.setText(""); //El campo de texto contraseña se limpia 
 
@@ -232,15 +260,15 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_loginActionPerformed
 
     private void useMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_useMousePressed
-        if (use.getText().equals("Ingrese el usuario")){
+        if (use.getText().equals("Ingrese el usuario")) {
             use.setText("");
             use.setForeground(Color.black);
         }
-        if (String.valueOf(pass.getPassword()).isEmpty()){
+        if (String.valueOf(pass.getPassword()).isEmpty()) {
             pass.setText("********");
             pass.setForeground(Color.gray);
         }
-        
+
     }//GEN-LAST:event_useMousePressed
 
     private void useActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useActionPerformed
@@ -262,23 +290,30 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMouseExited
 
     private void passMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passMousePressed
-        if (String.valueOf(pass.getPassword()).equals("********")){
+        if (String.valueOf(pass.getPassword()).equals("********")) {
             pass.setText("");
-            pass.setForeground(Color.black);   
+            pass.setForeground(Color.black);
         }
-        if (use.getText().isEmpty()){
+        if (use.getText().isEmpty()) {
             use.setText("Ingrese el usuario");
             use.setForeground(Color.gray);
         }
     }//GEN-LAST:event_passMousePressed
 
     private void loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseEntered
-        login.setBackground(new Color (253,82,0) ); //Al pasar el cursor sobre el boton cambia a color naranja
+        login.setBackground(new Color(253, 82, 0)); //Al pasar el cursor sobre el boton cambia a color naranja
     }//GEN-LAST:event_loginMouseEntered
 
     private void loginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseExited
-        login.setBackground(new Color (102,102,255) ); //Al alejar el cursor del boton cambia a su color original
+        login.setBackground(new Color(102, 102, 255)); //Al alejar el cursor del boton cambia a su color original
     }//GEN-LAST:event_loginMouseExited
+
+    private void passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        }
+    }//GEN-LAST:event_passKeyPressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

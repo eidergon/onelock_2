@@ -4,6 +4,8 @@
  */
 package onelock;
 
+import java.sql.ResultSet;
+
 
 public class onelock extends javax.swing.JFrame {
 
@@ -461,6 +463,9 @@ public class onelock extends javax.swing.JFrame {
                 new onelock().setVisible(true);
             }
         });
+        
+        conexion.conectarse();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
